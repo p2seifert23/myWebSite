@@ -1,0 +1,101 @@
+<html>
+<head>
+<script language="JavaScript">
+
+var partsOfSpeech = ["Enter an animal", "Enter a name", "Enter a location", "Enter a planet name", "Enter a vehicle", "Enter a movie name","Enter a length with unit","Enter a food","Enter a location","Enter a feeling"];
+   
+var answers = ["word1","word2","word3","word4","word5","word6","word7","word8","word9","word10"];
+   
+var story = [" One day there was a ", " named ", ". It lived in ", ". In the future, it wanted to travel to ", " in a ", ". On the planet, it wanted to watch a movie called ", " on a ", " tv. Also it wanted to eat "," at the ", ". It was very ", ". The end!"];
+
+   
+var count = 0;
+
+function prompt2()
+{
+// if this is the start, display the textbox and hide the story.
+// then display the first element of partsOfSpeech in the textbox.
+    document.getElementById("userEnter").style.visibility = "visible";
+    document.getElementById("story").style.visibility = "hidden";
+    document.getElementById("response").value = partsOfSpeech[count];
+   
+}
+
+
+
+function getWords()
+{
+   
+    var wordBox = document.getElementById("response")
+    answers[count] = wordBox.value;
+   
+   
+    count ++;   //incremtn count
+   
+    if( count < partsOfSpeech.length )
+    {
+        prompt2();
+    }
+    else           //all elements have been addded
+    {
+        count = 0;
+        document.getElementById("story").innerHTML = displayStory();
+    }
+}
+   
+
+function displayStory()
+{
+    var answer = "";
+    var i;
+
+                         // loop to stitch elements of story with elements of answers.
+                        //answer = answer + story[0];
+                   // answer = answer + partsOfSpeech[0];
+   
+                             //alert (answer)
+   
+   for ( i = 0; i< answers.length; i++)
+    {
+       answer = answer + story [i];
+       answer = answer + answers [i];
+    }
+   
+    if ( i < story.length)
+        answer = answer + story[i];
+  //  else if (answers[i] == "")
+// if there's one more element in story than answers, then add the last element of answers
+
+// Make the story div visible, and the userEnter div hidden.
+  alert(answer)
+   
+    document.getElementById("userEnter").style.visibility ="hidden";
+    document.getElementById("story").style.visibility ="visible";
+   
+
+// return the variable answer.
+    return answer;
+ 
+}
+
+</script>
+</head>
+<body>
+    <a>Click here to <a href=index.html> return to Index.</a>
+    <br/>
+    <br/>
+    <br/>
+<center>
+<h1>My MadLib!</h1>
+<input id="daButton" type="button" value="start" onClick="prompt2()"/>
+</center>
+<div id="userEnter" style="position:absolute; left:200; top: 100; visibility:hidden;">
+<input type = "text" id="response" value="" onfocusout="getWords()"/></p>
+</div>
+
+<div id="story" style="position:absolute; overflow:scroll; top:300; left:200; width:400; height: 200; visibility:hidden">
+
+
+
+</body>
+</html>
