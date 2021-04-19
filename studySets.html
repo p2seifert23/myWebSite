@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+<script language="JavaScript">
+
+
+// Two dimensional array
+var terms =[
+			  ["term1", "def1"], ["term2", "def2"], ["term3", "def3"]
+			];
+				   
+		
+var termNum = -1;
+var questionNum = -1;
+var incorrect = 0;
+var score = 0
+
+function nextTerm()
+{
+	termNum++
+	if (termNum == terms.length)
+	{
+		termNum = 0;
+	}
+   
+	document.getElementById("term").value = terms[termNum][0];
+	document.getElementById("def").value = terms[termNum][1];
+}
+
+function addTerm()
+{    
+    var term = prompt("Who is the term?");
+    var def = prompt("What is the definition?");
+    var insert = [term, def];
+    terms.push(insert);
+}
+
+function removeTerm()
+{
+	var tTerm = prompt("What term do you want to remove?");
+    var tIndex = -1;
+    var tIndex = getTerm(tTerm);
+    
+    if (tIndex == -1){
+        alert("Term not found.");
+    }
+    else{
+        terms.splice(tIndex); //index of array/number of elements
+        
+    } 
+    
+}
+
+function getTerm(tTerm)
+{
+    var index = -1;
+    for (var i = 0; i < terms.length; i++){
+        if (terms[i][0] == tTerm){
+            index = i;
+        }
+    }
+    
+    return index;
+}
+    
+function displayQuestion()
+{   
+    questionNum++;
+    //alert(questionNum);
+    
+    if (questionNum == terms.length){
+        questionNum = 0;
+        displayQuestion();
+    }
+    else{
+    document.getElementById("question").value = terms[questionNum][1];
+    }
+}
+    
+function updateScore()
+{
+	ans = document.getElementById("answer");
+    
+    checkAnswer(ans);
+}
+
+function updateStatus(){
+    document.getElementById("incorrect").innerHTML = incorrect;
+    document.getElementById("correct").innerHTML = score;
+}
+
+ 
+function checkAnswer(ans)
+{  
+ 
+    if (ans.value == terms[questionNum][0]){ 
+        score++;
+        updateStatus();
+        ans.value = ""; 
+        
+    }
+   
+    else{
+        incorrect++;
+        updateStatus();
+        ans.value = ""; 
+    }
+         
+    if ((questionNum) == (terms.length-1)){
+        alert("Score: " + score + "   Correct: " + score + "   Incorrect: " + incorrect);
+        questionNum=-1;
+        score=0; 
+        correct=0;
+        incorrect=0;
+        updateStatus();
+        displayQuestion();
+    }
+}
+
+
+</script>
+<style>
+    
+    h1{ 
+     margin: 5px 0;
+     text-align: center;
+     border: 3px solid blue;
+    }
+    h4{ 
+     margin: 5px 0;
+     text-align: center;
+    }
+    h2{
+     border: 1px solid blue;   
+    }
+    .intro{
+     margin: 15px 0;
+     text-align: center;
+     width: 700px;
+    }
+    .body{
+     margin: 2px;
+     text-align: center;
+     
+    }
+     p{
+     text-align: center;
+    }
+    
+    
+</style>   
+</head>
+<body bgcolor=#e8e8e8> 
+
+    <h1>Study Setz</h1>
+    <h4>Your personal studying platform.</h4>
+<center>
+  
+<div class = "intro">
+    <p>Study Setz is a basic re-creation of the popular online study platform, Quizlet. However, unlike Quizlet, Study Setz works 100% offline and will not distract you while studying with advertisements.</p> 
+    </div> 
+ 
+    <h2>Flashcard Mode</h2>
+
+<input type="button" value = "Next Term" onclick="nextTerm()"/>
+<br/><br/>
+<input type="text" id="term" size="50">  <input type="text" id="def" size="50">
+<br/><br/>
+<input type="button" value = "Add a term" onclick="addTerm()"/>
+<input type="button" value = "Remove a term" onclick="removeTerm()"/>
+
+
+    
+<div class="body">
+    <p>Click the "Add a term" button in order to add terms and definitions to your study set. Click the "Remove a term" button in order to remove terms and definitions from your study set.</p>
+    </div>    
+    
+   
+<h2>Quiz Mode</h2>
+    <p>Enter the correct term name of the definition shown below</p>
+    
+   <p style="display: inline;"> Correct: </p> <p style="display: inline;" id="correct"> </p>
+    
+    <p style="display: inline;"> Incorrect: </p> <p style="display: inline;" id="incorrect"> </p>
+    
+<table border = 1>
+	<tr>
+		<td>  	<input id="question" type="text" size="50" readonly = true/>	</td>
+	</tr>
+	<tr height = "12"><td></td>
+	</tr>
+    
+		<td>	<input id="answer" type="text" size="50" onfocusout="updateScore()"/>
+            	
+</table>
+<br/>
+<input type="button" value="Next Question" onclick="displayQuestion()"/>
+
+</center>
+
+
+</body>
+</html>
